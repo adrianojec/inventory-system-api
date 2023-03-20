@@ -1,3 +1,4 @@
+using API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentityService(builder.Configuration);
 
 var app = builder.Build();
 
