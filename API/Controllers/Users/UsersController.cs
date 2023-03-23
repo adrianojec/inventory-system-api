@@ -23,6 +23,23 @@ namespace API.Controllers.Users
       }
 
       [AllowAnonymous]
+      [HttpPost("login")]
+      public async Task<ActionResult<UserViewModel>> login([FromBody] LoginUserInputModel input)
+      {
+         var user = await _userManager.FindByEmailAsync(input.Email);
+
+         if (user == null) return Unauthorized();
+
+         var result = await _userManager.CheckPasswordAsync(user, input.Password);
+
+         if (!result) return Unauthorized();
+
+         var token = _tokenService.CreateToken(user);
+
+         return new UserViewModel(user.UserName, token);
+      }
+
+      [AllowAnonymous]
       [HttpPost("register")]
       public async Task<ActionResult<UserViewModel>> register([FromBody] RegisterUserInputModel input)
       {
