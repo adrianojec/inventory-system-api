@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Controllers.Users.InputModels;
 using API.Controllers.Users.ViewModels;
 using API.Services;
@@ -12,14 +13,31 @@ namespace API.Controllers.Users
    [ApiController]
    [Route("api/[controller]")]
 
-   public class UsersController : ControllerBase
+   public class AuthController : ControllerBase
    {
       private readonly UserManager<User> _userManager;
       private readonly TokenService _tokenService;
-      public UsersController(UserManager<User> userManager, TokenService tokenService)
+      public AuthController(UserManager<User> userManager, TokenService tokenService)
       {
          _tokenService = tokenService;
          _userManager = userManager;
+      }
+
+      [AllowAnonymous]
+      [HttpPost("login")]
+      public async Task<ActionResult<UserViewModel>> login([FromBody] LoginUserInputModel input)
+      {
+         var user = await _userManager.FindByEmailAsync(input.Email);
+
+         if (user == null) return Unauthorized();
+
+         var result = await _userManager.CheckPasswordAsync(user, input.Password);
+
+         if (!result) return Unauthorized();
+
+         var token = _tokenService.CreateToken(user);
+
+         return new UserViewModel(user.UserName, token);
       }
 
       [AllowAnonymous]
@@ -45,6 +63,16 @@ namespace API.Controllers.Users
          var token = _tokenService.CreateToken(user);
 
          System.Console.WriteLine(token);
+
+         return new UserViewModel(user.UserName, token);
+      }
+
+      [HttpGet]
+      public async Task<ActionResult<UserViewModel>> GetCurrentUser()
+      {
+         var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+         var token = _tokenService.CreateToken(user);
 
          return new UserViewModel(user.UserName, token);
       }
