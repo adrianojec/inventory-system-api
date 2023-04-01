@@ -483,3 +483,4 @@ $RECYCLE.BIN/
 .vscode/tasks.json
 
 API/inventory-system.db
+Persistence/Migrations/
