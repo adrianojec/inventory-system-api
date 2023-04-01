@@ -5,6 +5,8 @@
 
 appsettings.json
 
+
+
 # User-specific files
 *.rsuser
 *.suo
@@ -479,3 +481,5 @@ $RECYCLE.BIN/
 *.lnk
 .vscode/launch.json
 .vscode/tasks.json
+
+API/inventory-system.db

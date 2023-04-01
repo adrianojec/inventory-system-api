@@ -67,7 +67,7 @@ namespace API.Controllers.Users
          return new UserViewModel(user.UserName, token);
       }
 
-      [HttpGet]
+      [HttpGet("current-user")]
       public async Task<ActionResult<UserViewModel>> GetCurrentUser()
       {
          var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
