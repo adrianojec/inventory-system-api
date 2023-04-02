@@ -1,5 +1,6 @@
 using Application.Context;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Repositories.ShopRepositories
 {
@@ -20,9 +21,10 @@ namespace Application.Repositories.ShopRepositories
          throw new NotImplementedException();
       }
 
-      public Task<List<Shop>> GetAll()
+      public async Task<List<Shop>> GetAll()
       {
-         throw new NotImplementedException();
+         var shops = await _context.Shops.ToListAsync();
+         return shops;
       }
 
       public Task<Shop> GetById(Guid id)

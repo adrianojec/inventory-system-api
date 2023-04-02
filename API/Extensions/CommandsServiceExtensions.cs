@@ -9,6 +9,7 @@ namespace API.Extensions
       {
          // Shop Commands
          services.AddScoped<ICreateShopCommand, CreateShopCommand>();
+         services.AddScoped<IGetShopsCommand, GetShopsCommand>();
 
          return services;
       }
