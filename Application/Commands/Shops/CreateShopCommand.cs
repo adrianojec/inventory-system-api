@@ -16,6 +16,7 @@ namespace Application.Commands.Shops
       {
          if (string.IsNullOrEmpty(input.Name)) return Result<bool>.Failure("Shop Name is required");
          if (string.IsNullOrEmpty(input.Location)) return Result<bool>.Failure("Shop Location is required");
+         if (string.IsNullOrEmpty(input.ContactNumber) && string.IsNullOrEmpty(input.EmailAddress)) return Result<bool>.Failure("Contact Number or Email Address must be provided");
 
          _shopRepository.Add(input.ToShopEntity());
          await _shopRepository.SaveChangesAsync();

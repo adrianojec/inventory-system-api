@@ -8,12 +8,16 @@ namespace API.Controllers.Shops.ViewModels
       {
          Id = input.Id;
          Name = input.Name;
-         Image = input.Image;
+         Logo = input.Logo;
+         ContactNumber = input.ContactNumber;
+         EmailAddress = input.EmailAddress;
          Location = input.Location;
       }
       public Guid Id { get; set; }
       public String Name { get; set; } = string.Empty;
-      public String Image { get; set; } = string.Empty;
+      public String Logo { get; set; } = string.Empty;
+      public String ContactNumber { get; set; } = string.Empty;
+      public String EmailAddress { get; set; } = string.Empty;
       public String Location { get; set; } = string.Empty;
    }
 }

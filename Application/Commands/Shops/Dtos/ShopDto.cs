@@ -8,12 +8,18 @@ namespace Application.Commands.Shops.Dtos
       {
          Id = shop.Id;
          Name = shop.Name;
-         Image = shop.Image;
+         Logo = shop.Logo;
+         ContactNumber = shop.ContactNumber;
+         EmailAddress = shop.EmailAddress;
          Location = shop.Location;
+         isArchived = shop.isArchived;
       }
       public Guid Id { get; set; }
       public String Name { get; set; } = string.Empty;
-      public String Image { get; set; } = string.Empty;
+      public String Logo { get; set; } = string.Empty;
+      public String ContactNumber { get; set; } = string.Empty;
+      public String EmailAddress { get; set; } = string.Empty;
       public String Location { get; set; } = string.Empty;
+      public bool isArchived { get; set; }
    }
 }
