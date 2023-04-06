@@ -8,7 +8,6 @@ namespace Application.Repositories
       public BaseRepository(IDataContext context)
       {
          _context = context;
-
       }
    }
 }
