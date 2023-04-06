@@ -15,9 +15,9 @@ namespace Application.Commands.Addresses
       }
       public async Task<Result<bool>> ExecuteCommand(CreateAddressDto input)
       {
-         if (string.IsNullOrEmpty(input.Street)) return Result<bool>.Failure("Street must be provided");
-         if (input.ZipCode == 0) return Result<bool>.Failure("Please provide a valid zip code");
-         if (string.IsNullOrEmpty(input.City)) return Result<bool>.Failure("City must be provided");
+         if (string.IsNullOrEmpty(input.Street)) return Result<bool>.Failure("Street is required.");
+         if (input.ZipCode == 0) return Result<bool>.Failure("Zip code is invalid.");
+         if (string.IsNullOrEmpty(input.City)) return Result<bool>.Failure("City is required.");
 
          await _addressRepository.Add(input.ToAddressEntity());
 
