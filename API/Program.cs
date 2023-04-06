@@ -1,4 +1,5 @@
 using API.Extensions;
+using Application.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -44,6 +45,9 @@ builder.Services.AddDbContext<DataContext>(opt =>
 });
 
 builder.Services.AddIdentityService(builder.Configuration);
+builder.Services.AddScoped<IDataContext, DataContext>();
+builder.Services.AddRepositoryServices();
+builder.Services.AddCommandServices();
 
 var app = builder.Build();
 
