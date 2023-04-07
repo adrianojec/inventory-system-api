@@ -1,5 +1,6 @@
 using Application.Context;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Repositories.AddressRepositories
 {
@@ -10,23 +11,28 @@ namespace Application.Repositories.AddressRepositories
       {
          _context = context;
       }
+
       public async Task Add(Address input)
       {
          _context.Addresses.Add(input);
          await _context.SaveChangesAsync();
       }
-      public Task<List<Address>> GetAll()
+
+      public async Task<List<Address>> GetAll()
       {
-         throw new NotImplementedException();
+         return await _context.Addresses.ToListAsync();
       }
+
       public Task<Address> GetById(Guid id)
       {
          throw new NotImplementedException();
       }
+
       public Task Update(Address input)
       {
          throw new NotImplementedException();
       }
+
       public Task Delete(Guid id)
       {
          throw new NotImplementedException();
