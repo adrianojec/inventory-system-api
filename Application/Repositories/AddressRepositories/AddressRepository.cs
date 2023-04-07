@@ -23,9 +23,11 @@ namespace Application.Repositories.AddressRepositories
          return await _context.Addresses.ToListAsync();
       }
 
-      public Task<Address> GetById(Guid id)
+      public async Task<Address> GetById(Guid id)
       {
-         throw new NotImplementedException();
+         var address = await _context.Addresses.FirstOrDefaultAsync(address => address.Id == id);
+
+         return address;
       }
 
       public Task Update(Address input)

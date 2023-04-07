@@ -10,14 +10,17 @@ namespace API.Controllers.Addresses
    {
       private readonly ICreateAddressCommand _createAddressCommand;
       private readonly IGetAddressesCommand _getAddressesCommand;
+      private readonly IGetAddressCommand _getAddressCommand;
       public AddressesController
       (
          ICreateAddressCommand createAddressCommand,
-         IGetAddressesCommand getAddressesCommand
+         IGetAddressesCommand getAddressesCommand,
+         IGetAddressCommand getAddressCommand
       )
       {
          _createAddressCommand = createAddressCommand;
          _getAddressesCommand = getAddressesCommand;
+         _getAddressCommand = getAddressCommand;
       }
 
       [HttpPost]
@@ -40,6 +43,16 @@ namespace API.Controllers.Addresses
          var addressList = addresses.Value.Select(address => new AddressViewModel(address)).ToList();
 
          return Ok(addressList);
+      }
+
+      [HttpGet("{id}")]
+      public async Task<ActionResult<AddressViewModel>> GetById([FromRoute] Guid id)
+      {
+         var address = await _getAddressCommand.ExecuteCommand(id);
+
+         if (!address.isSuccess) return BadRequest(address.Error);
+
+         return Ok(new AddressViewModel(address.Value));
       }
    }
 }
