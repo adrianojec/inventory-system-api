@@ -9,6 +9,7 @@ namespace API.Extensions
       {
          // Dependency Injection - Address Commands
          services.AddScoped<ICreateAddressCommand, CreateAddressCommand>();
+         services.AddScoped<IGetAddressesCommand, GetAddressesCommand>();
 
          return services;
       }
