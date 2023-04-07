@@ -10,9 +10,10 @@ namespace Application.Repositories.AddressRepositories
       {
          _context = context;
       }
-      public Task Add(Address input)
+      public async Task Add(Address input)
       {
-         throw new NotImplementedException();
+         _context.Addresses.Add(input);
+         await _context.SaveChangesAsync();
       }
       public Task<List<Address>> GetAll()
       {
