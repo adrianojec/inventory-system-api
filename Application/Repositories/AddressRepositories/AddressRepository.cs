@@ -20,12 +20,14 @@ namespace Application.Repositories.AddressRepositories
 
       public async Task<List<Address>> GetAll()
       {
-         return await _context.Addresses.ToListAsync();
+         return await _context.Addresses
+         .Where(address => !address.IsArchived)
+         .ToListAsync();
       }
 
       public async Task<Address> GetById(Guid id)
       {
-         var address = await _context.Addresses.FirstOrDefaultAsync(address => address.Id == id);
+         var address = await _context.Addresses.FirstOrDefaultAsync(address => address.Id == id && !address.IsArchived);
 
          return address;
       }
@@ -37,9 +39,11 @@ namespace Application.Repositories.AddressRepositories
          await _context.SaveChangesAsync();
       }
 
-      public Task Delete(Guid id)
+      public async Task Delete(Guid id)
       {
-         throw new NotImplementedException();
+         var address = await GetById(id);
+         address.IsArchived = true;
+         await _context.SaveChangesAsync();
       }
    }
 }

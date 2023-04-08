@@ -12,18 +12,21 @@ namespace API.Controllers.Addresses
       private readonly IGetAddressesCommand _getAddressesCommand;
       private readonly IGetAddressCommand _getAddressCommand;
       private readonly IUpdateAddressCommand _updateAddressCommand;
+      private readonly IDeleteAddressCommand _deleteAddressCommand;
       public AddressesController
       (
          ICreateAddressCommand createAddressCommand,
          IGetAddressesCommand getAddressesCommand,
          IGetAddressCommand getAddressCommand,
-         IUpdateAddressCommand updateAddressCommand
+         IUpdateAddressCommand updateAddressCommand,
+         IDeleteAddressCommand deleteAddressCommand
       )
       {
          _createAddressCommand = createAddressCommand;
          _getAddressesCommand = getAddressesCommand;
          _getAddressCommand = getAddressCommand;
          _updateAddressCommand = updateAddressCommand;
+         _deleteAddressCommand = deleteAddressCommand;
       }
 
       [HttpPost]
@@ -64,6 +67,16 @@ namespace API.Controllers.Addresses
          var address = await _updateAddressCommand.ExecuteCommand(input.ToUpdateAddressDto(id));
 
          if (!address.isSuccess) return BadRequest(address.Error);
+
+         return Ok();
+      }
+
+      [HttpDelete("{id}")]
+      public async Task<ActionResult> Delete([FromRoute] Guid id)
+      {
+         var result = await _deleteAddressCommand.ExecuteCommand(id);
+
+         if (!result.isSuccess) return BadRequest(result.Error);
 
          return Ok();
       }
