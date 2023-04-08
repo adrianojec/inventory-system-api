@@ -26,6 +26,8 @@ namespace Application.Commands.Addresses
          address.ZipCode = input.ZipCode;
          address.City = input.City;
 
+         await _addressRepository.Update(address);
+
          return Result<bool>.Success(true);
       }
    }
